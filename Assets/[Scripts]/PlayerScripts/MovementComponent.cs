@@ -7,10 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class MovementComponent : MonoBehaviour
 {
-    //public Animator leftWallAnimator;
-    //public Animator rightWallAnimator;
-    //public Animator frontWallAnimator;
-    //public Animator backWallAnimator;
+    public Animator leftWallAnimator;
+    public Animator rightWallAnimator;
+    public Animator frontWallAnimator;
+    public Animator backWallAnimator;
 
     [SerializeField]
     float walkSpeed = 5;
@@ -282,10 +282,10 @@ public class MovementComponent : MonoBehaviour
 
     public IEnumerator RunWinSequence()
     {
-        //backWallAnimator.SetBool("isGameComplete", true);
-        //frontWallAnimator.SetBool("isGameComplete", true);
-        //leftWallAnimator.SetBool("isGameComplete", true);
-        //rightWallAnimator.SetBool("isGameComplete", true);
+        backWallAnimator.SetBool("isGameComplete", true);
+        frontWallAnimator.SetBool("isGameComplete", true);
+        leftWallAnimator.SetBool("isGameComplete", true);
+        rightWallAnimator.SetBool("isGameComplete", true);
         yield return new WaitForSeconds(3.0f);
         SceneManager.LoadScene("WinScene");
     }
