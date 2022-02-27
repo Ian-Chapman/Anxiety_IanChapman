@@ -3,9 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class MovementComponent : MonoBehaviour
 {
+    //public Animator leftWallAnimator;
+    //public Animator rightWallAnimator;
+    //public Animator frontWallAnimator;
+    //public Animator backWallAnimator;
+
     [SerializeField]
     float walkSpeed = 5;
     [SerializeField]
@@ -64,14 +70,6 @@ public class MovementComponent : MonoBehaviour
     public GameObject lavaLampText;
 
 
-
-
-
-
-
-
-
-
     private void Awake()
     {
         playerAnimator = GetComponent<Animator>();
@@ -82,19 +80,29 @@ public class MovementComponent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        recordText.SetActive(true);
+        paintingText.SetActive(true);
+        toyCarText.SetActive(true);
+        teddyBearText.SetActive(true);
+        computerKeyboardText.SetActive(true);
+        toyElephantText.SetActive(true);
+        coffeeMugText.SetActive(true);
+        castleBlockText.SetActive(true);
+        storyBookText.SetActive(true);
+        comicBookText.SetActive(true);
+        clockText.SetActive(true);
+        toyBoatText.SetActive(true);
+        lavaLampText.SetActive(true);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        ///aiming/Looking
         ///horizontal rotation
         followTarget.transform.rotation *= Quaternion.AngleAxis(lookInput.x * aimSensitivity, Vector3.up);
         //verical rotation
         followTarget.transform.rotation *= Quaternion.AngleAxis(lookInput.y * aimSensitivity, Vector3.right);
 
-        //Clamping camera angles
+        //Clap angl
         var angles = followTarget.transform.localEulerAngles;
         angles.z = 0;
 
@@ -113,9 +121,7 @@ public class MovementComponent : MonoBehaviour
 
         //rotate the player rotation based on the look transform
         transform.rotation = Quaternion.Euler(0, followTarget.transform.rotation.eulerAngles.y, 0);
-
         followTarget.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
-        //playerAnimator.SetFloat(aimVerticalHash, 0);
 
         if (!(inputVector.magnitude > 0))
         {
@@ -127,6 +133,10 @@ public class MovementComponent : MonoBehaviour
         Vector3 movementDirection = moveDirection * (currentSpeed * Time.deltaTime);
 
         transform.position += movementDirection;
+
+
+
+        OnPlayerWin();
 
 
     }
@@ -160,9 +170,6 @@ public class MovementComponent : MonoBehaviour
     public void OnLook(InputValue value)
     {
         lookInput = value.Get<Vector2>();
-
-
-        //if we aim up, down, adjust animations to have a mask that will let us properly animate aim
     }
 
 
@@ -252,5 +259,35 @@ public class MovementComponent : MonoBehaviour
         }
     }
 
+    public void OnPlayerWin()
+    {
+        if ((record.gameObject == null) && 
+                (painting.gameObject == null) &&
+                (toyCar.gameObject == null) &&
+                (teddyBear.gameObject == null) &&
+                (computerKeyboard.gameObject == null) &&
+                (toyElephant.gameObject == null) &&
+                (coffeeMug.gameObject == null) &&
+                (castleBlock.gameObject == null) &&
+                (storyBook.gameObject == null) &&
+                (comicBook.gameObject == null) &&
+                (clock.gameObject == null) &&
+                (toyBoat.gameObject == null) &&
+                (lavaLamp.gameObject == null))
+        {
+            StartCoroutine(RunWinSequence());
+        }
+    }
+
+
+    public IEnumerator RunWinSequence()
+    {
+        //backWallAnimator.SetBool("isGameComplete", true);
+        //frontWallAnimator.SetBool("isGameComplete", true);
+        //leftWallAnimator.SetBool("isGameComplete", true);
+        //rightWallAnimator.SetBool("isGameComplete", true);
+        yield return new WaitForSeconds(3.0f);
+        SceneManager.LoadScene("WinScene");
+    }
 
 }
