@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class MovementComponent : MonoBehaviour
@@ -29,6 +30,47 @@ public class MovementComponent : MonoBehaviour
     public readonly int movementYHash = Animator.StringToHash("MovementY");
     public readonly int isJumpingHash = Animator.StringToHash("IsJumping");
     public readonly int isRunningHash = Animator.StringToHash("IsRunning");
+
+
+    //GameObjects the player will collect:
+    [Header("Collectable Objects")]
+    public GameObject record;
+    public GameObject painting;
+    public GameObject toyCar;
+    public GameObject teddyBear;
+    public GameObject computerKeyboard;
+    public GameObject toyElephant;
+    public GameObject coffeeMug;
+    public GameObject castleBlock;
+    public GameObject storyBook;
+    public GameObject comicBook;
+    public GameObject clock;
+    public GameObject toyBoat;
+    public GameObject lavaLamp;
+
+    [Header ("Text Objects")]
+    public GameObject recordText;
+    public GameObject paintingText;
+    public GameObject toyCarText;
+    public GameObject teddyBearText;
+    public GameObject computerKeyboardText;
+    public GameObject toyElephantText;
+    public GameObject coffeeMugText;
+    public GameObject castleBlockText;
+    public GameObject storyBookText;
+    public GameObject comicBookText;
+    public GameObject clockText;
+    public GameObject toyBoatText;
+    public GameObject lavaLampText;
+
+
+
+
+
+
+
+
+
 
     private void Awake()
     {
@@ -124,15 +166,91 @@ public class MovementComponent : MonoBehaviour
     }
 
 
-
-    private void OnCollisionEnter(Collision collision)
+    //Lose Condition
+    private void OnTriggerEnter(Collider other)
     {
-        if (!collision.gameObject.CompareTag("Ground") && !playerController.isJumping)
+        if((other.gameObject.tag == "BackWall") && (other.gameObject.tag == "LeftWall") &&
+            (other.gameObject.tag == "RightWall") && (other.gameObject.tag == "FrontWall"))
+        {
+            //game over stuff here
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (!other.gameObject.CompareTag("Ground") && !playerController.isJumping)
         {
             return;
         }
 
         playerController.isJumping = false;
         playerAnimator.SetBool(isJumpingHash, false);
+
+        //Destroy the collectable objects and remove their text from the canvas
+        if (other.gameObject.tag == "Record") 
+            { Destroy(other.gameObject); 
+            recordText.SetActive(false); }
+        
+        if (other.gameObject.tag == "Painting") 
+            { Destroy(other.gameObject);
+            paintingText.SetActive(false);
+        }
+        
+        if (other.gameObject.tag == "Toy Car") 
+            { Destroy(other.gameObject);
+            toyCarText.SetActive(false);
+        }
+        
+        if (other.gameObject.tag == "Teddy Bear") 
+            { Destroy(other.gameObject);
+            teddyBearText.SetActive(false);
+        }
+        
+        if (other.gameObject.tag == "Computer Keyboard") 
+            { Destroy(other.gameObject);
+            computerKeyboardText.SetActive(false);
+        }
+        
+        if (other.gameObject.tag == "Toy Elephant") 
+            { Destroy(other.gameObject);
+            toyElephantText.SetActive(false);
+        }
+        
+        if (other.gameObject.tag == "Coffee Mug") 
+            { Destroy(other.gameObject);
+            coffeeMugText.SetActive(false);
+        }
+        
+        if (other.gameObject.tag == "Castle Block") 
+            { Destroy(other.gameObject);
+            castleBlockText.SetActive(false);
+        }
+        
+        if (other.gameObject.tag == "Story Book") 
+            { Destroy(other.gameObject);
+            storyBookText.SetActive(false);
+        }
+        
+        if (other.gameObject.tag == "Comic Book") 
+            { Destroy(other.gameObject);
+            comicBookText.SetActive(false);
+        }
+        
+        if (other.gameObject.tag == "Clock") 
+            { Destroy(other.gameObject);
+            clockText.SetActive(false);
+        }
+        
+        if (other.gameObject.tag == "Toy Boat") 
+            { Destroy(other.gameObject);
+            toyBoatText.SetActive(false);
+        }
+        
+        if (other.gameObject.tag == "Lava Lamp") 
+            { Destroy(other.gameObject);
+            lavaLampText.SetActive(false);
+        }
     }
+
+
 }

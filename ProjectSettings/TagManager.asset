@@ -5,6 +5,36 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - BackWall
+  - LeftWall
+  - FrontWall
+  - RightWall
+  - Record
+  - Painting
+  - Toy Car
+  - Teddy Bear
+  - Computer Keyboard
+  - Toy Elephant
+  - Coffee Mug
+  - Castle Block
+  - Story Book
+  - Comic Book
+  - Clock
+  - Toy Boat
+  - Lava Lamp
+  - RecordText
+  - PaintingText
+  - ToyCarText
+  - TeddyBearText
+  - ComputerKeyboardText
+  - ToyElephantText
+  - CoffeeMugText
+  - CastleBlockText
+  - StoryBookText
+  - ComicBookText
+  - ClockText
+  - ToyBoatText
+  - LavaLampText
   layers:
   - Default
   - TransparentFX
