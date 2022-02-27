@@ -12,6 +12,8 @@ public class MovementComponent : MonoBehaviour
     public Animator frontWallAnimator;
     public Animator backWallAnimator;
 
+    public AudioSource audioSource;
+
     [SerializeField]
     float walkSpeed = 5;
     [SerializeField]
@@ -69,6 +71,7 @@ public class MovementComponent : MonoBehaviour
     public GameObject toyBoatText;
     public GameObject lavaLampText;
 
+    private bool WinGame = false;
 
     private void Awake()
     {
@@ -165,23 +168,12 @@ public class MovementComponent : MonoBehaviour
         playerController.isJumping = value.isPressed;
         rigidbody.AddForce((transform.up + moveDirection) * jumpForce, ForceMode.Impulse);
         playerAnimator.SetBool(isJumpingHash, playerController.isJumping);
+        audioSource.Play();
     }
 
     public void OnLook(InputValue value)
     {
         lookInput = value.Get<Vector2>();
-    }
-
-
-    //Lose Condition
-    private void OnTriggerEnter(Collider other)
-    {
-        if((other.gameObject.tag == "BackWall") && (other.gameObject.tag == "LeftWall") &&
-            (other.gameObject.tag == "RightWall") && (other.gameObject.tag == "FrontWall"))
-        {
-            //On Player Lose
-            StartCoroutine(RunLoseSequence());
-        }
     }
 
     private void OnCollisionEnter(Collision other)
@@ -258,6 +250,17 @@ public class MovementComponent : MonoBehaviour
             { Destroy(other.gameObject);
             lavaLampText.SetActive(false);
         }
+
+
+        if ((other.gameObject.tag == "BackWall") && (other.gameObject.tag == "LeftWall") &&
+            (other.gameObject.tag == "RightWall") && (other.gameObject.tag == "FrontWall"))
+        {
+            //On Player Lose
+            StartCoroutine(RunLoseSequence());
+        }
+
+
+
     }
 
     public void OnPlayerWin()
@@ -283,6 +286,7 @@ public class MovementComponent : MonoBehaviour
 
     public IEnumerator RunWinSequence()
     {
+        //WinGame = true;
         backWallAnimator.SetBool("isGameComplete", true);
         frontWallAnimator.SetBool("isGameComplete", true);
         leftWallAnimator.SetBool("isGameComplete", true);
@@ -293,6 +297,7 @@ public class MovementComponent : MonoBehaviour
 
     public IEnumerator RunLoseSequence()
     {
+        //WinGame = false;
         yield return new WaitForSeconds(3.0f);
         SceneManager.LoadScene("LoseScene");
     }
