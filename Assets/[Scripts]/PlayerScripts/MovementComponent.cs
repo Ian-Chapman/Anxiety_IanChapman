@@ -179,7 +179,8 @@ public class MovementComponent : MonoBehaviour
         if((other.gameObject.tag == "BackWall") && (other.gameObject.tag == "LeftWall") &&
             (other.gameObject.tag == "RightWall") && (other.gameObject.tag == "FrontWall"))
         {
-            //game over stuff here
+            //On Player Lose
+            StartCoroutine(RunLoseSequence());
         }
     }
 
@@ -288,6 +289,12 @@ public class MovementComponent : MonoBehaviour
         rightWallAnimator.SetBool("isGameComplete", true);
         yield return new WaitForSeconds(3.0f);
         SceneManager.LoadScene("WinScene");
+    }
+
+    public IEnumerator RunLoseSequence()
+    {
+        yield return new WaitForSeconds(3.0f);
+        SceneManager.LoadScene("LoseScene");
     }
 
 }
